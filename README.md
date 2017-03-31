@@ -92,7 +92,9 @@ $sort用于指定输出的链接类别，以实现链接的分类输出。缺省
 
 第二种输出为HTML标签调用法。可以在文章或页面中加入HTML标签来实现链接的调用。
 其调用原型为：
+```php
 <links $links_num $sort>$pattern</links>
+```
 
 $links_num $sort $pattern的功能及缺省值与第一种一样。不过，为了$links_num和$sort缺省值的识别，建议$sort采用的命名方式为：以字母开头，仅包括字母和数字。
 
