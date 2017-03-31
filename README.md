@@ -4,10 +4,13 @@
 
 更新历史
 
-增加CSS样式links 
-详细见http://www.ncnynl.com
-@author nightcat at 2016-6-5
+详细见http://www.wxxk.cc
 
+* version 1.1.1 at 2017-3-31
+* 支持Typecho 1.0
+* 删除分类
+* 增加Gravatar头像（优先级比图片链接高）
+* 
 * version 1.1.0 at 2013-12-08
 * 修改支持Typecho 0.9
 *
