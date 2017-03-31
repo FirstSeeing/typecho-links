@@ -41,7 +41,7 @@ include 'menu.php';
                                 <col width="20"/>
 								<col width="25%"/>
 								<col width=""/>
-								<col width="15%"/>
+								<col width="30%"/>
 								<col width="10%"/>
                             </colgroup>
                             <thead>
@@ -49,7 +49,7 @@ include 'menu.php';
                                     <th> </th>
 									<th><?php _e('链接名称'); ?></th>
 									<th><?php _e('链接地址'); ?></th>
-									<th><?php _e('分类'); ?></th>
+									<th><?php _e('邮箱'); ?></th>
 									<th><?php _e('图片'); ?></th>
                                 </tr>
                             </thead>
@@ -62,12 +62,21 @@ include 'menu.php';
 									<td><?php echo $link['url']; ?></td>
 									<td><?php echo $link['sort']; ?></td>
 									<td><?php
-										if ($link['image']) {
-											echo '<a href="'.$link['image'].'" title="点击放大" target="_blank"><img class="avatar" src="'.$link['image'].'" alt="'.$link['name'].'" width="32" height="32"/></a>';
-										} else {
-											$options = Typecho_Widget::widget('Widget_Options');
-											$nopic_url = Typecho_Common::url('/usr/plugins/Links/nopic.jpg', $options->siteUrl);
-											echo '<img class="avatar" src="'.$nopic_url.'" alt="NOPIC" width="32" height="32"/>';
+										if ($link['sort'])
+										{
+											$gravatar_url = Typecho_Common::gravatarUrl($link['sort'], 256, 'G', 'mm', true);
+											echo '<a href="'.$gravatar_url.'" title="点击放大" target="_blank"><img class="avatar" src="'.$gravatar_url.'" alt="'.$link['name'].'" width="32" height="32"/></a>';
+										}
+										else
+										{
+											if ($link['image'])
+											{
+												echo '<a href="'.$link['image'].'" title="点击放大" target="_blank"><img class="avatar" src="'.$link['image'].'" alt="'.$link['name'].'" width="32" height="32"/></a>';
+											}
+											else
+											{
+												echo '<img class="avatar" src="'.Typecho_Common::gravatarUrl("", 256, 'G', 'mm', true).'" alt="NOPIC" width="32" height="32"/>';
+											}
 										}
 									?></td>
                                 </tr>
