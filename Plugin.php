@@ -154,7 +154,7 @@ class Links_Plugin implements Typecho_Plugin_Interface
 			throw new Typecho_Plugin_Exception('友情链接插件启用失败。错误号：'.$code);
 		}
 	}
-
+    
 	public static function form($action = NULL)
 	{
 		/** 构建表格 */
@@ -170,8 +170,8 @@ class Links_Plugin implements Typecho_Plugin_Interface
 		$url = new Typecho_Widget_Helper_Form_Element_Text('url', NULL, "http://", _t('链接地址*'));
 		$form->addInput($url);
 		
-		/** 链接分类 */
-		$sort = new Typecho_Widget_Helper_Form_Element_Text('sort', NULL, NULL, _t('链接分类'), _t('建议以英文字母开头，只包含字母与数字'));
+		/** 邮箱 */
+		$sort = new Typecho_Widget_Helper_Form_Element_Text('sort', NULL, NULL, _t('邮箱'));
 		$form->addInput($sort);
 		
 		/** 链接图片 */
@@ -199,7 +199,7 @@ class Links_Plugin implements Typecho_Plugin_Interface
 		$submit->input->setAttribute('class', 'btn primary');
 		$form->addItem($submit);
 		$request = Typecho_Request::getInstance();
-
+        
         if (isset($request->lid) && 'insert' != $action) {
             /** 更新模式 */
 			$db = Typecho_Db::get();
@@ -250,11 +250,11 @@ class Links_Plugin implements Typecho_Plugin_Interface
 		$link = $db->fetchRow($db->select()->from($prefix.'links')->where('lid = ?', $lid)->limit(1));
 		return $link ? true : false;
 	}
-
+	
     /**
      * 控制输出格式
      */
-	public static function output_str($pattern=NULL, $links_num=0, $sort=NULL)
+	public static function output_str($pattern=NULL, $links_num=0)
 	{
 		$options = Typecho_Widget::widget('Widget_Options');
 		if (!isset($options->plugins['activated']['Links'])) {
@@ -269,15 +269,8 @@ class Links_Plugin implements Typecho_Plugin_Interface
 		}
 		$db = Typecho_Db::get();
 		$prefix = $db->getPrefix();
-		$options = Typecho_Widget::widget('Widget_Options');
-		$nopic_url = Typecho_Common::url('/usr/plugins/Links/nopic.jpg', $options->siteUrl);
+		$nopic_url = Typecho_Common::gravatarUrl("", 256, 'G', 'mm', true);
 		$sql = $db->select()->from($prefix.'links');
-		if (!isset($sort) || $sort == "") {
-			$sort = NULL;
-		}
-		if ($sort) {
-			$sql = $sql->where('sort=?', $sort);
-		}
 		$sql = $sql->order($prefix.'links.order', Typecho_Db::SORT_ASC);
 		$links_num = intval($links_num);
 		if ($links_num > 0) {
@@ -285,9 +278,18 @@ class Links_Plugin implements Typecho_Plugin_Interface
 		}
 		$links = $db->fetchAll($sql);
 		$str = "";
-		foreach ($links as $link) {
-			if ($link['image'] == NULL) {
-				$link['image'] = $nopic_url;
+		foreach ($links as $link)
+		{
+			if ($link['sort'])
+			{
+				$link['image'] = Typecho_Common::gravatarUrl($link['sort'], 256, 'G', 'mm', true);
+			}
+			else
+			{
+				if ($link['image'] == NULL)
+				{
+					$link['image'] = $nopic_url;
+				}
 			}
 			$str .= str_replace(
 				array('{lid}', '{name}', '{url}', '{sort}', '{title}', '{description}', '{image}', '{user}'),
@@ -299,9 +301,9 @@ class Links_Plugin implements Typecho_Plugin_Interface
 	}
 
 	//输出
-	public static function output($pattern=NULL, $links_num=0, $sort=NULL)
+	public static function output($pattern=NULL, $links_num=0)
 	{
-		echo Links_Plugin::output_str($pattern, $links_num, $sort);
+		echo Links_Plugin::output_str($pattern, $links_num);
 	}
 	
     /**
@@ -317,7 +319,7 @@ class Links_Plugin implements Typecho_Plugin_Interface
 		$pattern = $matches[3];
 		$links_num = $matches[1];
 		$sort = $matches[2];
-		return Links_Plugin::output_str($pattern, $links_num, $sort);
+		return Links_Plugin::output_str($pattern, $links_num);
     }
 
     public static function parse($text, $widget, $lastResult)
