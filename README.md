@@ -70,13 +70,13 @@ Links插件目前支持的输出规则有：
 
 插件自带三种输出规则：显示文字、显示图片及图文混排。
 当$pattern值为NULL或SHOW_TEXT时，则规则为显示文字。
-<li><a href="{url}" title="{title}" target="_blank">{name}</a></li>\n
+`<li><a href="{url}" title="{title}" target="_blank">{name}</a></li>\n`
 
 当$pattern值为SHOW_IMG时，则规则为显示图片。
-<li><a href="{url}" title="{title}" target="_blank"><img src="{image}" alt="{name}" /></a></li>\n
+`<li><a href="{url}" title="{title}" target="_blank"><img src="{image}" alt="{name}" /></a></li>\n`
 
 当$pattern值为SHOW_MIX时，则规则为显示图片和文字
-<li><a href="{url}" title="{title}" target="_blank"><img src="{image}" alt="{name}" /><span>{name}</span></a></li>\n
+`<li><a href="{url}" title="{title}" target="_blank"><img src="{image}" alt="{name}" /><span>{name}</span></a></li>\n`
 
 
 $links_num是用于控制链接输出的条数的。当$links_num为缺省值0时，表示不进行限制，输出满足条件的所有链接。
