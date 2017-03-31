@@ -54,8 +54,9 @@
 第一种为函数调用法。函数的原型为：
 output($pattern=NULL, $links_num=0, $sort=NULL)
 
-其中，$pattern是输出规则。输出规则是Links插件的一种特殊语法。使用输出规则，可以定制出属于自己的链接输出方式。例如：
-<li><a href="{url}" title="{title}" target="_blank">{name}</a></li>
+其中，`$pattern`是输出规则。输出规则是Links插件的一种特殊语法。使用输出规则，可以定制出属于自己的链接输出方式。例如：
+
+`<li><a href="{url}" title="{title}" target="_blank">{name}</a></li>`
 
 这就是一个输出规则的例子。经过插件解析后，{url}将会被替换成链接地址，{title}将会被替换链连描述，{name}将会被替换成链接名称。
 Links插件目前支持的输出规则有：
@@ -69,13 +70,16 @@ Links插件目前支持的输出规则有：
 
 
 插件自带三种输出规则：显示文字、显示图片及图文混排。
-当$pattern值为NULL或SHOW_TEXT时，则规则为显示文字。
+当`$pattern`值为NULL或SHOW_TEXT时，则规则为显示文字。
+
 `<li><a href="{url}" title="{title}" target="_blank">{name}</a></li>\n`
 
-当$pattern值为SHOW_IMG时，则规则为显示图片。
+当`$pattern`值为SHOW_IMG时，则规则为显示图片。
+
 `<li><a href="{url}" title="{title}" target="_blank"><img src="{image}" alt="{name}" /></a></li>\n`
 
-当$pattern值为SHOW_MIX时，则规则为显示图片和文字
+当`$pattern`值为SHOW_MIX时，则规则为显示图片和文字
+
 `<li><a href="{url}" title="{title}" target="_blank"><img src="{image}" alt="{name}" /><span>{name}</span></a></li>\n`
 
 
